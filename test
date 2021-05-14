@@ -1,0 +1,30 @@
+
+'''
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print('Logged on as {0}!'.format(self.user))
+
+    async def on_message(self, message):
+        print('Message from {0.author}: {0.content}'.format(message))
+
+client = MyClient()
+'''
+
+client = discord.Client()
+
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('$hello'):
+        channels = client.get_channel(842767168340492299)
+        print(channels)
+        channel = []
+        for i in client.get_all_channels():
+            channel.append(i)
+        await message.channel.send(channel)
