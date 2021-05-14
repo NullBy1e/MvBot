@@ -1,4 +1,5 @@
 from discord.ext import commands
+from discord.guild import Guild
 import discord
 import json
 import time
@@ -7,35 +8,37 @@ bot = commands.Bot(command_prefix="n!")
 channel1 = 0
 channel2 = 0
 
+@bot.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(bot))
 
 @bot.command(pass_context=True)
 async def check(ctx):
-    await ctx.channel.send('tests')
+    await ctx.channel.send('Bot is running')
+
 
 @bot.command(pass_contaxt=True)
-async def setup(ctx, chan1, chan2):
+async def setupChan(ctx, chan1, chan2):
     global channel1
     global channel2
-    channel1 = int(chan1)
-    channel2 = int(chan2)
-    await ctx.channel.send('Vars set')
+    channel1 = int(getChanID(ctx,str(chan1)))
+    channel2 = int(getChanID(ctx,str(chan2)))
+    await ctx.channel.send('Variables set')
 
 @bot.command(pass_contaxt=True)
-async def listChan(ctx):
-    channel = []
-    for i in bot.get_all_channels():
-        channel.append(i)
-    await ctx.channel.send(channel)
+async def getChan(ctx, *, given_name=None):
+    for channel in ctx.guild.channels:
+        if channel.name == given_name:
+            wanted_channel_id = channel.id
+    await ctx.send(wanted_channel_id) # this is just to check 
 
 @bot.command(pass_context=True)
-async def negotiate(ctx, member: discord.Member):
-    print(channel1,channel2)
+async def mvUser(ctx, member: discord.Member):
     voice_channel = bot.get_channel(channel1)
     voice_channel2 = bot.get_channel(channel2)
-    for i in range(100):
-        await discord.Member.move_to(member, voice_channel)
-        time.sleep(0.5)
-        await discord.Member.move_to(member, voice_channel2)
+    await discord.Member.move_to(member, voice_channel)
+    time.sleep(1)
+    await discord.Member.move_to(member, voice_channel2)
     print('Moving user')
 
 
@@ -46,5 +49,11 @@ def readConfig(id):
         return json_data["Token"]
     else:
         raise Exception ("Can't find specified id in config")
+
+def getChanID(ctx,given_name=None):
+    for channel in ctx.guild.channels:
+        if channel.name == given_name:
+            wanted_channel_id = channel.id
+            return wanted_channel_id
 
 bot.run(readConfig('Token'))
