@@ -18,6 +18,7 @@ async def setup(ctx, chan1, chan2):
     channel1 = int(chan1)
     channel2 = int(chan2)
     await ctx.channel.send('Vars set')
+#zmienilem
 
 @bot.command(pass_contaxt=True)
 async def listChan(ctx):
