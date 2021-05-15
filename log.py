@@ -26,3 +26,8 @@ def log(Type, Message):
         os.touch("Logs/{}.log".format(str(date)))
         logFile = open("Logs/{}.log".format(str(date)), "a")
     logFile.write(time + " " + Type + " " + Message + "\n")
+
+
+def check_logs():
+    #TODO: Check if the logs contain errors
+    pass
