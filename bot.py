@@ -1,6 +1,7 @@
 from discord.ext import commands
 import config
 import discord
+import log
 import time
 
 bot = commands.Bot(command_prefix="$")
@@ -72,4 +73,5 @@ def get_chan_id(ctx, given_name=None):
 # TODO: Use the $help commands
 if __name__ == "__main__":
     print("Starting Script")
+    log.log("test", "test")
     bot.run(config.get_variable_from_config("Token"))
