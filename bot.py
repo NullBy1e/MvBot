@@ -3,7 +3,7 @@ import discord
 import json
 import time
 
-bot = commands.Bot(command_prefix="$")
+bot = commands.Bot(command_prefix = "$")
 channel1 = 0
 channel2 = 0
 
@@ -14,34 +14,34 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 
-@bot.command(pass_context=True)
+@bot.command(pass_context = True)
 async def check(ctx):
     #TODO: check & create the logs and print if there are any errors
     await ctx.channel.send('Bot is running')
 
 
-@bot.command(pass_contaxt=True)
+@bot.command(pass_contaxt = True)
 async def setupChan(ctx, chan1, chan2):
     #*Assigns the channel ID to the global variables
     #TODO: Add try/catch and add to logs
     global channel1, channel2
-    channel1 = int(getChanID(ctx, str(chan1)))
-    channel2 = int(getChanID(ctx, str(chan2)))
+    channel1 = int(get_chan_id(ctx, str(chan1)))
+    channel2 = int(get_chan_id(ctx, str(chan2)))
     await ctx.channel.send('Variables set')
     print('Settings Variables: '+ str(channel1) + ';'+str(channel2))
 
 
-@bot.command(pass_contaxt=True)
-async def getChanId(ctx, *, given_name=None):
+@bot.command(pass_contaxt = True)
+async def getChanId(ctx, *, given_name = None):
     #*Get channel Id and print it in the channel that the command is used in
     for channel in ctx.guild.channels:
         if channel.name == given_name:
             wanted_channel_id = channel.id
-    await ctx.send(wanted_channel_id) 
+    await ctx.send(wanted_channel_id)
 
 
 @commands.has_role("Admin")
-@bot.command(pass_context=True)
+@bot.command(pass_context = True)
 async def mvUser(ctx, member: discord.Member, number):
     #*Moves the user to the specified channels and number of times
     #TODO: Add try/catch
@@ -61,7 +61,7 @@ async def mvUser(ctx, member: discord.Member, number):
     print('Moving user')
 
 
-def readConfig(name):
+def read_config(name):
     #* Read config and return the name of variable
     with open('config.json', 'r') as file:
         json_data = json.load(file)
@@ -71,7 +71,7 @@ def readConfig(name):
         raise Exception("Can't find specified id in config")
 
 
-def getChanID(ctx, given_name=None):
+def get_chan_id(ctx, given_name = None):
     #*Return the channel name
     for channel in ctx.guild.channels:
         if channel.name == given_name:
@@ -79,7 +79,7 @@ def getChanID(ctx, given_name=None):
             return wanted_channel_id
 
 
-bot.run(readConfig('Token'))
+bot.run(read_config('Token'))
 
 
-#TODO: Use the $help commands
+# TODO: Use the $help commands
