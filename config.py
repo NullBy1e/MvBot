@@ -1,3 +1,4 @@
+from log import log
 import json
 
 
@@ -6,6 +7,7 @@ def read_config():
     with open("config.json", "r") as file:
         json_data = json.load(file)
         return json_data
+    log("INFO", "Reading from config")
 
 
 def parse_config(conf_json, variable):
@@ -26,4 +28,4 @@ def write_variable_to_config(name, value):
     dic.update(variable)
     with open("config.json", "w") as f:
         json.dump(dic, f)
-    # TODO: Log the value to the config
+    log("INFO", "Writing to Config: {}".format(str(name) + ";" + str(value)))
