@@ -1,6 +1,6 @@
 from discord.ext import commands
+import config
 import discord
-import json
 import time
 
 bot = commands.Bot(command_prefix="$")
@@ -61,16 +61,6 @@ async def mvUser(ctx, member: discord.Member, number):
     print("Moving user")
 
 
-def read_config(name):
-    # * Read config and return the name of variable
-    with open("config.json", "r") as file:
-        json_data = json.load(file)
-    if name == "Token":
-        return json_data["Token"]
-    else:
-        raise Exception("Can't find specified id in config")
-
-
 def get_chan_id(ctx, given_name=None):
     # *Return the channel name
     for channel in ctx.guild.channels:
@@ -79,8 +69,7 @@ def get_chan_id(ctx, given_name=None):
             return wanted_channel_id
 
 
-bot.run(read_config("Token"))
-
-
 # TODO: Use the $help commands
-# TODO:test
+if __name__ == "__main__":
+    print("Starting Script")
+    bot.run(config.get_variable_from_config("Token"))
