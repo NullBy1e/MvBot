@@ -13,7 +13,7 @@ channel2 = 0
 async def on_ready():
     # *When Bot is ready it will execute the code below
     print("We have logged in as {0.user}".format(bot))
-    log("INFO", "Bot has started succesfully!")
+    log("INFO", "Bot has started successfully!")
 
 
 @bot.command(pass_context=True)
@@ -22,7 +22,7 @@ async def check(ctx):
     await ctx.channel.send("Bot is running")
 
 
-@bot.command(pass_contaxt=True)
+@bot.command(pass_context=True)
 async def setupChan(ctx, chan1, chan2):
     # *Assigns the channel ID to the global variables
     try:
@@ -39,7 +39,7 @@ async def setupChan(ctx, chan1, chan2):
     print("Settings Variables: " + str(channel1) + ";" + str(channel2))
 
 
-@bot.command(pass_contaxt=True)
+@bot.command(pass_context=True)
 async def getChanId(ctx, *, given_name=None):
     # *Get channel Id and print it in the channel that the command is used in
     for channel in ctx.guild.channels:
