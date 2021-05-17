@@ -70,6 +70,7 @@ async def mvUser(ctx, member: discord.Member, number):
         except:
             await ctx.channel.send("User is not in channel")
             log("ERROR", "User is not in channel")
+            break
     print("Moving user")
 
 
