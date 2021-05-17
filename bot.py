@@ -3,6 +3,7 @@ from log import log
 import config
 import discord
 import time
+import sys
 
 bot = commands.Bot(command_prefix="$")
 channel1 = 0
@@ -81,6 +82,11 @@ def get_chan_id(ctx, given_name=None):
             wanted_channel_id = channel.id
             return wanted_channel_id
 
+
+@commands.has_role("Admin")
+@bot.command(pass_context=True)
+async def exit(ctx, given_name=None):
+    sys.exit()
 
 if __name__ == "__main__":
     print("Starting Script")
