@@ -86,7 +86,8 @@ def get_chan_id(ctx, given_name=None):
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
 async def exit(ctx, given_name=None):
-    sys.exit()
+    log("INFO", "bot stopped from Discord channel")
+    sys.exit("exit command in channel")
 
 if __name__ == "__main__":
     print("Starting Script")
