@@ -63,9 +63,9 @@ async def mvUser(ctx, member: discord.Member, number):
             print("power")
             counter += 1
             await discord.Member.move_to(member, voice_channel2)
-            if counter == 4:
+            if counter == 5:
                 print("Cooldown")
-                time.sleep(5)
+                time.sleep(3)
                 counter = 0
         except:
             await ctx.channel.send("User is not in channel")
