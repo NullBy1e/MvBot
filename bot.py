@@ -8,7 +8,8 @@ import sys
 bot = commands.Bot(command_prefix="$")
 channel1 = 0
 channel2 = 0
-stop=False
+stop = False
+
 
 @bot.event
 async def on_ready():
@@ -59,8 +60,8 @@ async def mvUser(ctx, member: discord.Member, number):
     voice_channel2 = bot.get_channel(channel2)
     counter = 0
     for i in range(int(number)):
-        if stop==True:
-            stop=False
+        if stop:
+            stop = False
             break
         print(counter)
         try:
@@ -89,19 +90,19 @@ def get_chan_id(ctx, given_name=None):
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
-async def exit(ctx, given_name=None):
-    #kills all process
+async def exitBot(ctx, given_name=None):
+    # kills all process
     log("INFO", "bot stopped from Discord channel")
     sys.exit("exit command in channel")
+
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
 async def stop_function(ctx, given_name=None):
-    #stops function
+    # stops function
     log("INFO", "bot stopped from Discord channel")
     global stop
-    stop=True
-
+    stop = True
 
 
 if __name__ == "__main__":
