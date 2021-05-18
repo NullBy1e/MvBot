@@ -6,6 +6,7 @@ import time
 import sys
 
 bot = commands.Bot(command_prefix="$")
+bot.remove_command("help")
 channel1 = 0
 channel2 = 0
 stop = False
@@ -103,6 +104,35 @@ async def stop_function(ctx, given_name=None):
     log("INFO", "bot stopped from Discord channel")
     global stop
     stop = True
+
+
+@bot.command(pass_context=True)
+async def help(ctx, commandName=None):
+    if commandName != None:
+        pass
+    else:
+        embed = discord.Embed(title="Help: ")
+        embed.add_field(name="hi", value="Say hello!")
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
+
+
+@bot.command()
+async def userinfo(ctx, member: discord.Member):
+    user = member
+
+    embed = discord.Embed(
+        title="USER INFO",
+        description=f"Here is the info we retrieved about {user}",
+        colour=user.colour,
+    )
+    embed.set_thumbnail(url=user.avatar_url)
+    embed.add_field(name="NAME", value=user.name, inline=True)
+    embed.add_field(name="NICKNAME", value=user.nick, inline=True)
+    embed.add_field(name="ID", value=user.id, inline=True)
+    embed.add_field(name="STATUS", value=user.status, inline=True)
+    embed.add_field(name="TOP ROLE", value=user.top_role.name, inline=True)
+    await ctx.send(embed=embed)
 
 
 if __name__ == "__main__":
