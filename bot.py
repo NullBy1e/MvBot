@@ -3,6 +3,7 @@ from log import log
 import config
 import discord
 import time
+import sys
 
 bot = commands.Bot(command_prefix="$")
 channel1 = 0
@@ -87,6 +88,12 @@ def get_chan_id(ctx, given_name=None):
             return wanted_channel_id
 
 
+@commands.has_role("Admin")
+@bot.command(pass_context=True)
+async def exitBot(ctx, given_name=None):
+    # kills all process
+    log("INFO", "bot stopped from Discord channel")
+    sys.exit("exit command in channel")
 
 
 @commands.has_role("Admin")
