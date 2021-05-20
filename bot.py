@@ -1,5 +1,6 @@
 from discord.ext import commands
 from log import log
+import helpCmd
 import config
 import discord
 import time
@@ -53,7 +54,7 @@ async def getChanId(ctx, *, given_name=None):
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
-async def mvUser(ctx, member: discord.Member, number):
+async def mvUser(ctx, member: discord.Member, number=2):
     global stop
     # *Moves the user to the specified channels and number of times
     # TODO: Assign 2 to number if the parameter is not set
@@ -99,7 +100,7 @@ async def exitBot(ctx, given_name=None):
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
-async def stop_function(ctx, given_name=None):
+async def Stop(ctx, given_name=None):
     # stops function
     log("INFO", "bot stopped from Discord channel")
     global stop
@@ -109,10 +110,15 @@ async def stop_function(ctx, given_name=None):
 @bot.command(pass_context=True)
 async def help(ctx, commandName=None):
     if commandName != None:
-        pass
-    else:
+        message = helpCmd.get_help_msg(commandName)
         embed = discord.Embed(title="Help: ")
-        embed.add_field(name="hi", value="Say hello!")
+        embed.add_field(name=commandName, value=message)
+        await ctx.send(embed=embed)
+    else:
+        messages = helpCmd.get_help_msg("All")
+        embed = discord.Embed(title="Help")
+        for x in messages:
+            embed.add_field(name=commandName, value=x)
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
