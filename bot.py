@@ -1,11 +1,13 @@
 from discord.ext import commands
 from log import log
+import helpCmd
 import config
 import discord
 import time
 import sys
 
 bot = commands.Bot(command_prefix="$")
+bot.remove_command("help")
 channel1 = 0
 channel2 = 0
 stop = False
@@ -52,7 +54,7 @@ async def getChanId(ctx, *, given_name=None):
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
-async def mvUser(ctx, member: discord.Member, number):
+async def mvUser(ctx, member: discord.Member, number=2):
     global stop
     # *Moves the user to the specified channels and number of times
     # TODO: Assign 2 to number if the parameter is not set
@@ -98,11 +100,45 @@ async def exitBot(ctx, given_name=None):
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
-async def stop_function(ctx, given_name=None):
+async def Stop(ctx, given_name=None):
     # stops function
     log("INFO", "bot stopped from Discord channel")
     global stop
     stop = True
+
+
+@bot.command(pass_context=True)
+async def help(ctx, commandName=None):
+    if commandName != None:
+        message = helpCmd.get_help_msg(commandName)
+        embed = discord.Embed(title="Help: ")
+        embed.add_field(name=commandName, value=message)
+        await ctx.send(embed=embed)
+    else:
+        messages = helpCmd.get_help_msg("All")
+        embed = discord.Embed(title="Help")
+        for x in messages:
+            embed.add_field(name=commandName, value=x)
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
+
+
+@bot.command()
+async def userinfo(ctx, member: discord.Member):
+    user = member
+
+    embed = discord.Embed(
+        title="USER INFO",
+        description=f"Here is the info we retrieved about {user}",
+        colour=user.colour,
+    )
+    embed.set_thumbnail(url=user.avatar_url)
+    embed.add_field(name="NAME", value=user.name, inline=True)
+    embed.add_field(name="NICKNAME", value=user.nick, inline=True)
+    embed.add_field(name="ID", value=user.id, inline=True)
+    embed.add_field(name="STATUS", value=user.status, inline=True)
+    embed.add_field(name="TOP ROLE", value=user.top_role.name, inline=True)
+    await ctx.send(embed=embed)
 
 
 if __name__ == "__main__":
