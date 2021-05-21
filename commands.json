@@ -1,0 +1,30 @@
+{
+    "default": {
+        "description": "Welcome to the help menu!",
+        "args": "None"
+    },
+    "setupChan": {
+        "description": "sets up the channels",
+        "args": "channel1 channel2"
+    },
+    "userinfo": {
+        "description": "Checks the user info provided by discord",
+        "args": " @Discord_member "
+    },
+    "stop_bot": {
+        "description": "Stops the running bot",
+        "args": "None"
+    },
+    "mvUser": {
+        "description": "Moves the user between channels (Requires setupChan)",
+        "args": " @Discord_member Number"
+    },
+    "getChanId": {
+        "description": "Gets channel id of specified name",
+        "args": "Channel_Name"
+    },
+    "check": {
+        "description": "Checks if the bot is running",
+        "args": "None"
+    }
+}

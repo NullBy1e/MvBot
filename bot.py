@@ -58,6 +58,7 @@ async def mvUser(ctx, member: discord.Member, number=2):
     global stop
     # *Moves the user to the specified channels and number of times
     # TODO: Assign 2 to number if the parameter is not set
+    # TODO: Check if the channel 1 & 2 are None then print error message to channel
     voice_channel = bot.get_channel(channel1)
     voice_channel2 = bot.get_channel(channel2)
     counter = 0
@@ -92,15 +93,7 @@ def get_chan_id(ctx, given_name=None):
 
 @commands.has_role("Admin")
 @bot.command(pass_context=True)
-async def exitBot(ctx, given_name=None):
-    # kills all process
-    log("INFO", "bot stopped from Discord channel")
-    sys.exit("exit command in channel")
-
-
-@commands.has_role("Admin")
-@bot.command(pass_context=True)
-async def Stop(ctx, given_name=None):
+async def stop_bot(ctx, given_name=None):
     # stops function
     log("INFO", "bot stopped from Discord channel")
     global stop
@@ -111,8 +104,10 @@ async def Stop(ctx, given_name=None):
 async def help(ctx, commandName=None):
     if commandName != None:
         message = helpCmd.get_help_msg(commandName)
+        args = helpCmd.get_help_args(commandName)
+        name = helpCmd.get_help_name(commandName)
         embed = discord.Embed(title="Help: ")
-        embed.add_field(name=commandName, value=message)
+        embed.add_field(name=name, value=message)
         await ctx.send(embed=embed)
     else:
         messages = helpCmd.get_help_msg("All")
