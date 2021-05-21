@@ -107,13 +107,15 @@ async def help(ctx, commandName=None):
         args = helpCmd.get_help_args(commandName)
         name = helpCmd.get_help_name(commandName)
         embed = discord.Embed(title="Help: ")
-        embed.add_field(name=name, value=message)
+        embed.add_field(name=name[0], value=message[0])
+        embed.add_field(name="Args", value=args[0])
         await ctx.send(embed=embed)
     else:
         messages = helpCmd.get_help_msg("All")
         embed = discord.Embed(title="Help")
-        for x in messages:
-            embed.add_field(name=commandName, value=x)
+        name = helpCmd.get_help_name("All")
+        for x in range(len(name)):
+            embed.add_field(name=name[x], value=messages[x])
         await ctx.message.delete()
         await ctx.send(embed=embed)
 

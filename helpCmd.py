@@ -36,7 +36,11 @@ def get_help_args(name):
 
 def get_help_name(name):
     returned_values = []
-    for x in help_Json:
-        if x == name:
+    if name == "All":
+        for x in help_Json:
             returned_values.append(x)
+    else:
+        for x in help_Json:
+            if x == name:
+                returned_values.append(x)
     return returned_values

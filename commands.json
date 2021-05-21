@@ -1,8 +1,4 @@
 {
-    "default": {
-        "description": "Welcome to the help menu!",
-        "args": "None"
-    },
     "setupChan": {
         "description": "sets up the channels",
         "args": "channel1 channel2"
