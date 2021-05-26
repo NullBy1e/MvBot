@@ -22,7 +22,6 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def check(ctx):
-    # TODO: check the logs if there are any errors
     await ctx.channel.send("Bot is running")
 
 
@@ -52,7 +51,7 @@ async def getChanId(ctx, *, given_name=None):
     await ctx.send(wanted_channel_id)
 
 
-@commands.has_role("Admin")
+@commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def mvUser(ctx, member: discord.Member, number=2):
     global stop
@@ -69,7 +68,6 @@ async def mvUser(ctx, member: discord.Member, number=2):
         print(counter)
         try:
             await discord.Member.move_to(member, voice_channel)
-            print("power")
             counter += 1
             await discord.Member.move_to(member, voice_channel2)
             if counter == 5:
@@ -80,7 +78,7 @@ async def mvUser(ctx, member: discord.Member, number=2):
             await ctx.channel.send("User is not in channel")
             log("ERROR", "User is not in channel")
             break
-    print("Moving user")
+    print("Done Moving User")
 
 
 def get_chan_id(ctx, given_name=None):
@@ -91,7 +89,7 @@ def get_chan_id(ctx, given_name=None):
             return wanted_channel_id
 
 
-@commands.has_role("Admin")
+@commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def stop_bot(ctx, given_name=None):
     # stops function
@@ -138,8 +136,37 @@ async def userinfo(ctx, member: discord.Member):
     await ctx.send(embed=embed)
 
 
+@bot.command(pass_context=True)
+async def getGuildId(ctx):
+    # TODO: Get serverId from discord not from command
+    id = ctx.message.guild.id
+    await ctx.channel.send(id)
+
+
+@bot.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def defaults(ctx, action, variable_name=None, variable=None):
+    if action == "read":
+        serverId = ctx.message.guild.id
+        var = config.get_variable_from_config(serverId)
+        await ctx.channel.send(var)
+        # TODO: Read if the config has any variables with id
+    elif action == "write":
+        serverId = ctx.message.guild.id
+        if variable_name and variable:
+            config.write_variable_to_config(
+                serverId, {str(variable_name): str(variable)}
+            )
+            await ctx.channel.send("Done!")
+    elif action == "delete":
+        serverId = ctx.message.guild.id
+        if variable_name:
+            config.delete_variable_to_config(serverId, variable_name)
+            await ctx.channel.send("Done!")
+    else:
+        await ctx.channel.send("Can't find specified action")
+
+
 if __name__ == "__main__":
     print("Starting Script")
     bot.run(config.get_variable_from_config("Token"))
-
-# TODO: Use the $help commands

@@ -19,8 +19,16 @@
         "description": "Gets channel id of specified name",
         "args": "Channel_Name"
     },
+    "getGuildId":{
+        "description":"Gets the server id",
+        "args": "None"
+    },
     "check": {
         "description": "Checks if the bot is running",
         "args": "None"
+    },
+    "defaults": {
+        "description": "Writes and reads to the default variables in server config",
+        "args": "action variable_name"
     }
 }
