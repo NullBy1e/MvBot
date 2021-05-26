@@ -133,6 +133,7 @@ async def userinfo(ctx, member: discord.Member):
     embed.add_field(name="ID", value=user.id, inline=True)
     embed.add_field(name="STATUS", value=user.status, inline=True)
     embed.add_field(name="TOP ROLE", value=user.top_role.name, inline=True)
+    embed.add_field(name='Account Created', value=user.created_at.__format__('%A, %d. %B %Y @ %H:%M:%S'))
     await ctx.send(embed=embed)
 
 
