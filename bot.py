@@ -185,9 +185,14 @@ async def text(ctx, text):
 
 
 @bot.command(pass_context=True)
-async def dm(ctx, message):
-    user = ctx.author
+async def dm(ctx, message,member: discord.Member ):
+    user = member
     await user.send(message)
+
+
+@bot.command(pass_context=True, no_pm=True)
+async def avatar(ctx, member: discord.Member):
+    await ctx.send("{}".format(member.avatar_url))
 
 
 if __name__ == "__main__":
