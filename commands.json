@@ -30,5 +30,10 @@
     "defaults": {
         "description": "Writes and reads to the default variables in server config",
         "args": "action variable_name"
+    },
+    "text": {
+        "description": "bot sends user's text to the chanel",
+        "args": "text to send"
     }
+
 }
