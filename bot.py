@@ -149,7 +149,10 @@ async def defaults(ctx, action, variable_name=None, variable=None):
     if action == "read":
         serverId = ctx.message.guild.id
         var = config.get_variable_from_config(serverId)
-        await ctx.channel.send(var)
+        if var:
+            await ctx.channel.send(var)
+        else:
+            await ctx.channel.send("*Cant find anything in config*")
         # TODO: Read if the config has any variables with id
     elif action == "write":
         serverId = ctx.message.guild.id
