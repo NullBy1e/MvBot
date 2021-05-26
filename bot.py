@@ -134,6 +134,7 @@ async def userinfo(ctx, member: discord.Member):
     embed.add_field(name="STATUS", value=user.status, inline=True)
     embed.add_field(name="TOP ROLE", value=user.top_role.name, inline=True)
     embed.add_field(name='Account Created', value=user.created_at.__format__('%A, %d. %B %Y @ %H:%M:%S'))
+    embed.add_field(name='Join Date', value=user.joined_at.__format__('%A, %d. %B %Y @ %H:%M:%S'))
     await ctx.send(embed=embed)
 
 
@@ -170,6 +171,12 @@ async def defaults(ctx, action, variable_name=None, variable=None):
     else:
         await ctx.channel.send("Can't find specified action")
 
+
+@bot.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def text(ctx,text):
+    await ctx.message.delete()
+    await ctx.channel.send(str(text))
 
 if __name__ == "__main__":
     print("Starting Script")
