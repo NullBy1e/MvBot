@@ -34,6 +34,10 @@
     "text": {
         "description": "bot sends user's text to the chanel",
         "args": "text to send"
+    },
+    "avatar": {
+        "description": "sends user's avatar",
+        "args": " @Discord_member "
     }
 
 }
