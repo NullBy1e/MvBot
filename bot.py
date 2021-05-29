@@ -16,13 +16,24 @@ stop = False
 @bot.event
 async def on_ready():
     # *When Bot is ready it will execute the code below
-    print("We have logged in as {0.user}".format(bot))
+    print("Logged in as {0.user}".format(bot))
     log("INFO", "Bot has started successfully!")
 
 
 @bot.command(pass_context=True)
 async def check(ctx):
+    info = (
+        " \nChannel1: "
+        + str(channel1)
+        + "\nChannel2: "
+        + str(channel2)
+        + "\nRunning on: "
+        + str(bot.user)
+        + "\nStop = "
+        + str(stop)
+    )
     await ctx.channel.send("Bot is running")
+    await ctx.channel.send("Info: " + info)
 
 
 @bot.command(pass_context=True)
@@ -54,10 +65,11 @@ async def getChanId(ctx, *, given_name=None):
 @commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def mvUser(ctx, member: discord.Member, number=2):
-    global stop
+    global stop, channel1, channel2
     # *Moves the user to the specified channels and number of times
-    # TODO: Assign 2 to number if the parameter is not set
     # TODO: Check if the channel 1 & 2 are None then print error message to channel
+    if channel1 and channel2:
+        pass
     voice_channel = bot.get_channel(channel1)
     voice_channel2 = bot.get_channel(channel2)
     counter = 0
@@ -121,7 +133,6 @@ async def help(ctx, commandName=None):
 @bot.command()
 async def userinfo(ctx, member: discord.Member):
     user = member
-
     embed = discord.Embed(
         title="USER INFO",
         description=f"Here is the info we retrieved about {user}",

@@ -20,8 +20,11 @@ def getTime():
 def log(Type, Message):
     date = getDate()
     time = getTime()
-    logFile = open("Logs/{}.log".format(str(date)), "a")
-    logFile.write(time + " " + Type + " " + Message + "\n")
+    try:
+        logFile = open("Logs/{}.log".format(str(date)), "a")
+        logFile.write(time + " " + Type + " " + Message + "\n")
+    except:
+        print('Please create the Logs folder in root dir!')
 
 
 def check_logs():
