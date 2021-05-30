@@ -190,13 +190,17 @@ async def defaults(ctx, action, variable_name=None, variable=None):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
-async def text(ctx, text):
+async def text(ctx, *argv):
     await ctx.message.delete()
-    await ctx.channel.send(str(text))
+    message = ""
+    for x in argv:
+        message += " "
+        message += str(x)
+    await ctx.channel.send(message)
 
 
 @bot.command(pass_context=True)
-async def dm(ctx, message,member: discord.Member ):
+async def dm(ctx, message, member: discord.Member):
     user = member
     await user.send(message)
 
