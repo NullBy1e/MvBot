@@ -4,7 +4,6 @@ import helpCmd
 import config
 import discord
 import time
-import sys
 
 bot = commands.Bot(command_prefix="$")
 bot.remove_command("help")
@@ -15,7 +14,6 @@ stop = False
 
 @bot.event
 async def on_ready():
-    # *When Bot is ready it will execute the code below
     print("Logged in as {0.user}".format(bot))
     log("INFO", "Bot has started successfully!")
 
@@ -44,7 +42,7 @@ async def setupChan(ctx, chan1, chan2):
         channel1 = int(get_chan_id(ctx, str(chan1)))
         channel2 = int(get_chan_id(ctx, str(chan2)))
         await ctx.channel.send("Variables set")
-    except TypeError as e:
+    except TypeError:
         await ctx.channel.send("Wrong Channel Names")
         log("ERROR", "Wrong Channel Name")
     except:
@@ -66,18 +64,17 @@ async def getChanId(ctx, *, given_name=None):
 @bot.command(pass_context=True)
 async def mvUser(ctx, member: discord.Member, number=2):
     global stop, channel1, channel2
-    # *Moves the user to the specified channels and number of times
+    # * Moves the user to the specified channels and number of times
     # TODO: Check if the channel 1 & 2 are None then print error message to channel
     if channel1 and channel2:
         pass
     voice_channel = bot.get_channel(channel1)
     voice_channel2 = bot.get_channel(channel2)
     counter = 0
-    for i in range(int(number)):
+    for _ in range(int(number)):
         if stop:
             stop = False
             break
-        print(counter)
         try:
             await discord.Member.move_to(member, voice_channel)
             counter += 1
@@ -104,7 +101,6 @@ def get_chan_id(ctx, given_name=None):
 @commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def stop_bot(ctx, given_name=None):
-    # stops function
     log("INFO", "bot stopped from Discord channel")
     global stop
     stop = True
@@ -156,7 +152,6 @@ async def userinfo(ctx, member: discord.Member):
 
 @bot.command(pass_context=True)
 async def getGuildId(ctx):
-    # TODO: Get serverId from discord not from command
     id = ctx.message.guild.id
     await ctx.channel.send(id)
 
@@ -171,7 +166,6 @@ async def defaults(ctx, action, variable_name=None, variable=None):
             await ctx.channel.send(var)
         else:
             await ctx.channel.send("*Cant find anything in config*")
-        # TODO: Read if the config has any variables with id
     elif action == "write":
         serverId = ctx.message.guild.id
         if variable_name and variable:
@@ -211,5 +205,4 @@ async def avatar(ctx, member: discord.Member):
 
 
 if __name__ == "__main__":
-    print("Starting Script")
     bot.run(config.get_variable_from_config("Token"))

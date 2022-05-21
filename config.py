@@ -7,7 +7,6 @@ def read_config():
     with open("config.json", "r") as file:
         json_data = json.load(file)
         return json_data
-    log("INFO", "Reading from config")
 
 
 def parse_config(conf_json, variable):

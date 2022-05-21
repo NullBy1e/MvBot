@@ -1,5 +1,3 @@
-import time
-import os
 import datetime
 
 
@@ -25,8 +23,3 @@ def log(Type, Message):
         logFile.write(time + " " + Type + " " + Message + "\n")
     except:
         print('Please create the Logs folder in root dir!')
-
-
-def check_logs():
-    # TODO: Check if the logs contain errors
-    pass

@@ -1,11 +1,12 @@
 # MvBot
-Bot for discord that does some stupid things that we think off :)
+Bot for discord that does some stupid things.
 ## How to use?
-Well its simple. Bot uses $ prefix & has the help function so:
+Well its simple. Bot uses $ prefix & has the help function:
+
 >$help
 
 Or
 
 >$help {Command}
 
-### Have fun using the bot !
+### Have fun !
